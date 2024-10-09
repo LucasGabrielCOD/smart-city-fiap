@@ -2,7 +2,6 @@ package br.com.fiap.smartcities.service;
 
 import br.com.fiap.smartcities.model.Emergency;
 import br.com.fiap.smartcities.repository.EmergencyRepository;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +21,7 @@ public class EmergencyService {
         return emergencyRepository.save(emergency);
     }
 
-    public Emergency updateEmergency(Long id, @NotNull Emergency emergencyDetails) {
+    public Emergency updateEmergency(Long id, Emergency emergencyDetails) {
         Emergency emergency = emergencyRepository.findById(id).orElseThrow();
         emergency.setStatus(emergencyDetails.getStatus());
         return emergencyRepository.save(emergency);
