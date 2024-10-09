@@ -1,0 +1,56 @@
+name: CI/CD
+
+on:
+  push:
+    branches: [ teste ]
+  pull_request:
+    branches: [ teste ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - name: Build with Maven
+        run: mvn package -DskipTests
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build the Docker image
+        run: docker build -t ${{ secrets.DOCKER_USERNAME }}/smart-city .
+
+      - name: Push the Docker image
+        run: docker push ${{ secrets.DOCKER_USERNAME }}/smart-city
+
+  deploy-staging:
+    needs: build
+    runs-on: ubuntu-latest
+    environment: staging
+    steps:
+      - name: Deploy to staging
+        run: |
+          docker pull ${{ secrets.DOCKER_USERNAME }}/smart-city
+          docker stop smart-city-staging || true
+          docker rm smart-city-staging || true
+          docker run -d -p 8081:8080 --name smart-city-staging ${{ secrets.DOCKER_USERNAME }}/smart-city
+
+  deploy-production:
+    needs: deploy-staging
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - name: Deploy to production
+        run: |
+          docker pull ${{ secrets.DOCKER_USERNAME }}/smart-city
+          docker stop smart-city-production || true
+          docker rm smart-city-production || true
+          docker run -d -p 8080:8080 --name smart-city-production ${{ secrets.DOCKER_USERNAME }}/smart-city
