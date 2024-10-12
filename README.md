@@ -77,7 +77,7 @@ A API estará disponível através da interface do Swagger UI, que facilita a vi
 
 ### Observação:
 
-As portas 8080 e 8081 são as portas padrão configuradas no docker-compose.yml. Caso você queira modifcar essas portas no arquivo de configuração, ajuste os endereços acima de acordo.
+As portas 8080 e 8081 são as portas padrão configuradas no docker-compose.yml. Caso você queira modificar essas portas no arquivo de configuração, ajuste os endereços acima de acordo.
 
 ### Endpoints:
 - **GET /api/accidents:** Retorna uma lista de todos os acidentes.
