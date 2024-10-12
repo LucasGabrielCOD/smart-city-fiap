@@ -37,7 +37,7 @@ Este projeto visa criar uma API REST para gerenciar informações sobre acidente
 1. Navegue até o diretório raiz do projeto:
 
    ```bash
-   cd smart-city-fiap
+   cd /caminho/para/o/seu/projeto/smart-city-fiap
    ```
 
 2. Execute o comando:
