@@ -55,10 +55,16 @@ Este comando irá construir a imagem Docker da aplicação, utilizando o Dockerf
 - **SPRING_DATASOURCE_USERNAME:** Nome de usuário do banco de dados.
 - **SPRING_DATASOURCE_PASSWORD:** Senha do banco de dados.
 
+2. Navegue até o diretório do projeto:
+   ```bash
+   cd /caminho/para/o/seu/projeto/smart-city-fiap
+   ```
+   (substitua /caminho/para/o/seu/projeto/ pelo caminho real do seu projeto. No meu caso ficará /home/lucas/Área de trabalho/laboratorio/ProjetoSmartCities)
+
 2. Execute o comando:
 
    ```bash
-   cd smart-city-fiap
+   docker-compose up -d 
    ```
 
 Este comando irá iniciar os serviços definidos no docker-compose.yml em modo detached (background), incluindo a aplicação e o banco de dados (se configurado).
