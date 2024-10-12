@@ -2,9 +2,9 @@ name: CI/CD
 
 on:
   push:
-    branches: [ teste ]
+    branches: [ teste2 ]  # criado para teste de workflow
   pull_request:
-    branches: [ teste ]
+    branches: [ teste2 ]  # criado para teste de workflow
 
 jobs:
   build:
@@ -15,9 +15,9 @@ jobs:
         uses: actions/setup-java@v3
         with:
           java-version: '17'
-          distribution: 'temurin'
+          distribution: 'temurin'  
       - name: Build with Maven
-        run: mvn package -DskipTests
+        run: mvn    package -DskipTests
 
       - name: Login to Docker Hub
         uses: docker/login-action@v2
@@ -25,7 +25,7 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Build the Docker image
+      - name: Build    the Docker image
         run: docker build -t ${{ secrets.DOCKER_USERNAME }}/smart-city .
 
       - name: Push the Docker image
@@ -39,8 +39,6 @@ jobs:
       - name: Deploy to staging
         run: |
           docker pull ${{ secrets.DOCKER_USERNAME }}/smart-city
-          docker stop smart-city-staging || true
-          docker rm smart-city-staging || true
           docker run -d -p 8081:8080 --name smart-city-staging ${{ secrets.DOCKER_USERNAME }}/smart-city
 
   deploy-production:
@@ -51,6 +49,4 @@ jobs:
       - name: Deploy to production
         run: |
           docker pull ${{ secrets.DOCKER_USERNAME }}/smart-city
-          docker stop smart-city-production || true
-          docker rm smart-city-production || true
           docker run -d -p 8080:8080 --name smart-city-production ${{ secrets.DOCKER_USERNAME }}/smart-city
