@@ -1,0 +1,21 @@
+
+services:
+  smart-city-staging:
+    image: zephyryuusha/smart-city
+    ports:
+      - "8081:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=staging
+      - DB_URL=$${secrets.DB_URL_STAGING}
+      - DB_USER=$${secrets.DB_USER_STAGING}
+      - DB_PASSWORD=$${secrets.DB_PASSWORD_STAGING}
+
+  smart-city-production:
+    image: zephyryuusha/smart-city
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=production
+      - DB_URL=$${secrets.DB_URL_PRODUCTION}
+      - DB_USER=$${secrets.DB_USER_PRODUCTION}
+      - DB_PASSWORD=$${secrets.DB_PASSWORD_PRODUCTION}
