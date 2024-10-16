@@ -49,7 +49,7 @@ jobs:
         run: |
            docker-compose run smart-city-staging sh -c "envsubst < /app/deploy.sh > /app/deploy-substituted.sh"
            docker-compose run smart-city-staging sh -c "chmod +x /app/deploy-substituted.sh 
-          && /app/deploy-substituted.sh staging" 
+           && /app/deploy-substituted.sh staging" 
 
   deploy-production:
     needs: deploy-staging
