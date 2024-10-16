@@ -39,17 +39,17 @@ jobs:
     environment: staging
     steps:
       - uses: actions/checkout@v4
-      - name: Fornece execute permission para deploy.sh
-        run: chmod +x deploy.sh
       - name: Instalar o Docker Compose
         run: |
           sudo apt-get update
           sudo apt-get install -y docker-compose
+      - name: Fornece execute permission para deploy.sh
+        run: chmod +x deploy.sh
       - name: Deploy to staging
         run: |
-          envsubst < deploy.sh > deploy-substituted.sh
-          chmod +x deploy-substituted.sh
-          docker-compose run smart-city-staging ./deploy-substituted.sh staging
+           docker-compose run smart-city-staging sh -c "envsubst < /app/deploy.sh > /app/deploy-substituted.sh"
+           docker-compose run smart-city-staging sh -c "chmod +x /app/deploy-substituted.sh 
+          && /app/deploy-substituted.sh staging" 
 
   deploy-production:
     needs: deploy-staging
@@ -57,13 +57,8 @@ jobs:
     environment: production
     steps:
       - uses: actions/checkout@v4
-      - name: Instalar o Docker Compose
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y docker-compose
       - name: Deploy to production
         run: |
-          envsubst < deploy.sh > deploy-substituted.sh
-          chmod +x deploy-substituted.sh
-          echo "/usr/local/bin" >> $GITHUB_PATH 
-          docker-compose run smart-city-production ./deploy-substituted.sh production
+          docker-compose run smart-city-production sh -c "envsubst < /app/deploy.sh > /app/deploy-substituted.sh"
+          docker-compose run smart-city-production sh -c "chmod +x /app/deploy-substituted.sh 
+          && /app/deploy-substituted.sh production"
