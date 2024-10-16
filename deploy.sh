@@ -10,9 +10,6 @@ fi
 # Define o ambiente
 ambiente=$1
 
-# Faz o pull da imagem Docker
-docker pull ${{ secrets.DOCKER_USERNAME }}/smart-city:latest
-
 # Define as variáveis de ambiente de acordo com o ambiente
 if [ "$ambiente" == "staging" ]; then
   export SPRING_PROFILES_ACTIVE=staging
