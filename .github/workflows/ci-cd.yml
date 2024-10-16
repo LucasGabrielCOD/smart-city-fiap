@@ -7,6 +7,15 @@ on:
     branches: [ teste2-backup]  # criado para teste de workflow
 
 jobs:
+  install-docker-compose:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Instalar Docker Compose
+        run: |
+          sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname 
+          -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+          sudo chmod +x /usr/local/bin/docker-compose
+
   build:
     runs-on: ubuntu-latest
     steps:
@@ -42,7 +51,10 @@ jobs:
       - name: Grant execute permission to deploy.sh
         run: chmod +x deploy.sh
       - name: Deploy to staging
-        run: ./deploy.sh staging
+        run: | 
+          envsubst < deploy.sh > deploy-substituted.sh
+          chmod +x deploy-substituted.sh
+          ./deploy-substituted.sh staging
 
   deploy-production:
     needs: deploy-staging
@@ -51,4 +63,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Deploy to production
-        run: ./deploy.sh production
+        run: |
+          envsubst < deploy.sh > deploy-substituted.sh
+          chmod +x deploy-substituted.sh
+          ./deploy-substituted.sh production
+
+
