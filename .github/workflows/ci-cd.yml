@@ -48,13 +48,13 @@ jobs:
     environment: staging
     steps:
       - uses: actions/checkout@v4
-      - name: Grant execute permission to deploy.sh
+      - name: Fornece execute permission para deploy.sh
         run: chmod +x deploy.sh
       - name: Deploy to staging
         run: | 
           envsubst < deploy.sh > deploy-substituted.sh
           chmod +x deploy-substituted.sh
-          ./deploy-substituted.sh staging
+          docker-compose run smart-city-staging ./deploy-substituted.sh staging
 
   deploy-production:
     needs: deploy-staging
@@ -66,6 +66,6 @@ jobs:
         run: |
           envsubst < deploy.sh > deploy-substituted.sh
           chmod +x deploy-substituted.sh
-          ./deploy-substituted.sh production
+          docker-compose run smart-city-staging ./deploy-substituted.sh production
 
 
