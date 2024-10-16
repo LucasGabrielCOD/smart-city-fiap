@@ -50,6 +50,7 @@ jobs:
         run: |
           envsubst < deploy.sh > deploy-substituted.sh
           chmod +x deploy-substituted.sh
+          echo "/usr/local/bin" >> $GITHUB_PATH 
           docker-compose run smart-city-staging ./deploy-substituted.sh staging
 
   deploy-production:
@@ -62,4 +63,5 @@ jobs:
         run: |
           envsubst < deploy.sh > deploy-substituted.sh
           chmod +x deploy-substituted.sh
+          echo "/usr/local/bin" >> $GITHUB_PATH 
           docker-compose run smart-city-production ./deploy-substituted.sh production
