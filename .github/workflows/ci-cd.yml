@@ -11,11 +11,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Instalar o Docker Compose
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y docker-compose
-
       - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
@@ -46,11 +41,14 @@ jobs:
       - uses: actions/checkout@v4
       - name: Fornece execute permission para deploy.sh
         run: chmod +x deploy.sh
+      - name: Instalar o Docker Compose
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y docker-compose
       - name: Deploy to staging
         run: |
           envsubst < deploy.sh > deploy-substituted.sh
           chmod +x deploy-substituted.sh
-          echo "/usr/local/bin" >> $GITHUB_PATH 
           docker-compose run smart-city-staging ./deploy-substituted.sh staging
 
   deploy-production:
@@ -59,6 +57,10 @@ jobs:
     environment: production
     steps:
       - uses: actions/checkout@v4
+      - name: Instalar o Docker Compose
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y docker-compose
       - name: Deploy to production
         run: |
           envsubst < deploy.sh > deploy-substituted.sh
