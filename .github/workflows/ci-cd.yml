@@ -51,6 +51,13 @@ jobs:
         run: |
           which docker-compose
 
+      - name: Verificar Docker
+        run: |
+          systemctl status docker
+
+      - name: Iniciar Docker
+        run: sudo systemctl start docker
+
       - name: Deploy to staging
         run: |
           /usr/bin/docker-compose run --entrypoint "" smart-city-staging /app/deploy.sh staging
