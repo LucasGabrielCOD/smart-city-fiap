@@ -1,5 +1,7 @@
 #!/bin/bash
 
+echo "Valor do argumento: $1"
+
 # Verifica se o ambiente foi especificado
 if [ -z "$1" ]; then
   echo "Uso: $0 <ambiente>"
@@ -10,11 +12,13 @@ fi
 # Define o ambiente
 ambiente=$1
 
+echo "Valor da variável ambiente: $ambiente"
+
 # Define as variáveis de ambiente de acordo com o ambiente
-if [ "$ambiente" == "staging" ]; then
+if [ "$ambiente" = "staging" ]; then
   export SPRING_PROFILES_ACTIVE=staging
   service=smart-city-staging
-elif [ "$ambiente" == "production" ]; then
+elif [ "$ambiente" = "production" ]; then
   export SPRING_PROFILES_ACTIVE=production
   service=smart-city-production
 else
