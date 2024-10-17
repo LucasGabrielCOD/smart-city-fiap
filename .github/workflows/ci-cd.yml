@@ -47,7 +47,8 @@ jobs:
 
       - name: Deploy to staging
         run: |
-          /usr/local/bin/docker-compose run --entrypoint "" smart-city-staging sh -c "envsubst < /app/deploy.sh > /app/deploy-substituted.sh 2>&1 && chmod +x /app/deploy-substituted.sh && /app/deploy-substituted.sh staging"
+          docker-compose run --entrypoint "" smart-city-staging /app/deploy.sh staging
+
 
   deploy-production:
     needs: deploy-staging
