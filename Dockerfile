@@ -17,7 +17,7 @@ USER appuser
 
 COPY --from=build /app/target/smart-city-0.0.1-SNAPSHOT.jar app.jar
 
-RUN apt-get update && apt-get install -y gettext
+RUN apk update && apk add gettext
 
 COPY deploy.sh /app/
 
