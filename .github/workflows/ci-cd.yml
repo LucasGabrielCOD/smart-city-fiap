@@ -47,9 +47,8 @@ jobs:
         run: chmod +x deploy.sh
       - name: Deploy to staging
         run: |
-           docker-compose run --entrypoint "" smart-city-staging sh -c "cp /github/workspace/deploy.sh /app 
-           && envsubst < /app/deploy.sh > /app/deploy-substituted.sh"
-           docker-compose run smart-city-staging sh -c "chmod +x /app/deploy-substituted.sh 
+          docker-compose run --entrypoint "" smart-city-staging sh -c "cp /github/workspace/deploy.sh /app && envsubst < /app/deploy.sh > /app/deploy-substituted.sh"          
+          docker-compose run smart-city-staging sh -c "chmod +x /app/deploy-substituted.sh 
            && /app/deploy-substituted.sh staging" 
 
   deploy-production:
@@ -60,7 +59,6 @@ jobs:
       - uses: actions/checkout@v4
       - name: Deploy to production
         run: |
-          docker-compose run --entrypoint "" smart-city-production sh -c "cp /github/workspace/deploy.sh /app 
-          && envsubst < /app/deploy.sh > /app/deploy-substituted.sh"
+          docker-compose run --entrypoint "" smart-city-production sh -c "cp /github/workspace/deploy.sh /app && envsubst < /app/deploy.sh > /app/deploy-substituted.sh"
           docker-compose run smart-city-production sh -c "chmod +x /app/deploy-substituted.sh 
           && /app/deploy-substituted.sh production"
