@@ -47,8 +47,8 @@ jobs:
           sudo apt-get install -y docker-compose
       - name: Deploy to staging
         run: |
-           docker-compose run --entrypoint "" smart-city-staging sh -c "envsubst < /app/deploy.sh > /app/deploy-substituted.sh 2>&1 && chmod +x /app/deploy-substituted.sh && /app/deploy-substituted.sh staging"     
-           docker-compose run smart-city-staging sh -c "chmod +x /app/deploy-substituted.sh 
+           docker-compose run --entrypoint "" smart-city-staging sh -c "envsubst < /app/deploy.sh > /app/deploy-substituted.sh 2>&1 
+           && chmod +x /app/deploy-substituted.sh && /app/deploy-substituted.sh staging" 
            && /app/deploy-substituted.sh staging" 
 
   deploy-production:
