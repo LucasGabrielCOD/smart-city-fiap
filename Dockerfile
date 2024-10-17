@@ -14,6 +14,7 @@ WORKDIR /app
 RUN apt-get update && \
     apt-get install -y openjdk-17-jdk && \
     apt-get install -y gettext && \
+    apt-get install -y docker-compose && \
     rm -rf /var/lib/apt/lists/*
 
 COPY --from=build /app/target/smart-city-0.0.1-SNAPSHOT.jar app.jar
