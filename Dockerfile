@@ -18,8 +18,8 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/*
 
 COPY --from=build /app/target/smart-city-0.0.1-SNAPSHOT.jar app.jar
-
 COPY deploy.sh /app/
+COPY docker-compose.yml /app/
 
 RUN chmod +x /app/deploy.sh
 
