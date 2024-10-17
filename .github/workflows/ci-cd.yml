@@ -45,8 +45,6 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y docker-compose
-      - name: Fornece execute permission para deploy.sh
-        run: chmod +x deploy.sh
       - name: Deploy to staging
         run: |
           docker-compose run --entrypoint "" smart-city-staging sh -c "envsubst < /app/deploy.sh > /app/deploy-substituted.sh"
