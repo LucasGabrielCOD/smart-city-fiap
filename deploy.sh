@@ -10,7 +10,7 @@ if [ -z "$1" ]; then
 fi
 
 # Define o ambiente
-ambiente=$1
+export ambiente=$1  # Exportar a variável
 
 echo "Valor da variável ambiente: $ambiente"
 
