@@ -13,3 +13,5 @@ jobs:
           fetch-depth: 0
       - name: Listar arquivos
         run: ls -l /github/workspace
+               - name: Imprimir variáveis de ambiente
+               run: env
