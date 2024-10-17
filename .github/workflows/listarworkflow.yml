@@ -1,0 +1,15 @@
+name: Teste Checkout
+
+on:
+  push:
+    branches: [ teste2-backup ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Listar arquivos
+        run: ls -l /github/workspace
