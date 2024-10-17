@@ -5,6 +5,7 @@ target/
 !**/src/test/**/target/
 .env.production
 .env.staging
+deploy.sh
 
 ### STS ###
 .apt_generated
