@@ -23,14 +23,14 @@ jobs:
       uses: docker/login-action@v2
       with:
         registry: https://index.docker.io/v1/
-        username: ${{ secrets.AzureAppService_ContainerUsername_fbdcf3a6ab594bdba5541471eda177b4 }}
-        password: ${{ secrets.AzureAppService_ContainerPassword_9080a3486e0646e19419a911417e22e7 }}
+        username: ${{ secrets.AzureAppService_ContainerUsername_1807d2de48d641978e55cc73a8a71835 }}
+        password: ${{ secrets.AzureAppService_ContainerPassword_ea5568ffc09a4265a3991ae183237e38 }}
 
     - name: Build and push container image to registry
       uses: docker/build-push-action@v3
       with:
         push: true
-        tags: index.docker.io/${{ secrets.AzureAppService_ContainerUsername_fbdcf3a6ab594bdba5541471eda177b4 }}/zephyryuusha/smart-city:${{ github.sha }}
+        tags: index.docker.io/${{ secrets.AzureAppService_ContainerUsername_1807d2de48d641978e55cc73a8a71835 }}/zephyryuusha/smart-city:${{ github.sha }}
         file: ./Dockerfile
 
   deploy:
@@ -47,5 +47,5 @@ jobs:
       with:
         app-name: 'smart-city-production'
         slot-name: 'production'
-        publish-profile: ${{ secrets.AzureAppService_PublishProfile_6463c0c6e485485abfb1fc8eab63fd2e }}
-        images: 'index.docker.io/${{ secrets.AzureAppService_ContainerUsername_fbdcf3a6ab594bdba5541471eda177b4 }}/zephyryuusha/smart-city:${{ github.sha }}'
+        publish-profile: ${{ secrets.AzureAppService_PublishProfile_499957e636e642399622f3f226538d1c }}
+        images: 'index.docker.io/${{ secrets.AzureAppService_ContainerUsername_1807d2de48d641978e55cc73a8a71835 }}/zephyryuusha/smart-city:${{ github.sha }}'
