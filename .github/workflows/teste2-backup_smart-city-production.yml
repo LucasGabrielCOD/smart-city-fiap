@@ -1,3 +1,6 @@
+# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
+# More GitHub Actions for Azure: https://github.com/Azure/actions
+
 name: Build and deploy container app to Azure Web App - smart-city-production
 
 on:
@@ -11,23 +14,24 @@ jobs:
     runs-on: 'ubuntu-latest'
 
     steps:
-      - uses: actions/checkout@v4  # Usar a versão mais recente
+    - uses: actions/checkout@v2
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
 
-      - name: Login to Docker Hub
-        uses: docker/login-action@v2
-        with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
+    - name: Log in to registry
+      uses: docker/login-action@v2
+      with:
+        registry: https://index.docker.io/v1/
+        username: ${{ secrets.AzureAppService_ContainerUsername_db9d9f0d984841fa9b9953c31fad7607 }}
+        password: ${{ secrets.AzureAppService_ContainerPassword_370b048dcb514b6690c101c44d931598 }}
 
-      - name: Build and push container image to registry
-        uses: docker/build-push-action@v3
-        with:
-          push: true
-          tags: index.docker.io/${{ secrets.DOCKER_USERNAME }}/zephyryuusha/smart-city:latest
-          file: ./Dockerfile
+    - name: Build and push container image to registry
+      uses: docker/build-push-action@v3
+      with:
+        push: true
+        tags: index.docker.io/${{ secrets.AzureAppService_ContainerUsername_db9d9f0d984841fa9b9953c31fad7607 }}/zephyryuusha/smart-city:${{ github.sha }}
+        file: ./Dockerfile
 
   deploy:
     runs-on: ubuntu-latest
@@ -37,17 +41,11 @@ jobs:
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
 
     steps:
-      - name: Login to Azure
-        uses: azure/login@v2
-        with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_PRODUCTION }} 
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_PRODUCTION }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_PRODUCTION }}
-
-      - name: Deploy to Azure Web App
-        id: deploy-to-webapp
-        uses: azure/webapps-deploy@v2
-        with:
-          app-name: 'smart-city-production'
-          slot-name: 'production'
-          startup-command: 'az webapp up -n smart-city-production -g smart-city-production_group --docker-compose-file docker-compose.yml -s production'
+    - name: Deploy to Azure Web App
+      id: deploy-to-webapp
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: 'smart-city-production'
+        slot-name: 'production'
+        publish-profile: ${{ secrets.AzureAppService_PublishProfile_0849cb60e77346188df0f0b370ec08d8 }}
+        images: 'index.docker.io/${{ secrets.AzureAppService_ContainerUsername_db9d9f0d984841fa9b9953c31fad7607 }}/zephyryuusha/smart-city:${{ github.sha }}'
