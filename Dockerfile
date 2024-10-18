@@ -20,8 +20,6 @@ RUN apt-get update && \
 COPY --from=build /app/target/smart-city-0.0.1-SNAPSHOT.jar app.jar
 COPY docker-compose.yml /app/
 
-RUN chmod +x /app/deploy.sh
-
 ENV SPRING_PROFILES_ACTIVE=prod
 
 EXPOSE 8080
