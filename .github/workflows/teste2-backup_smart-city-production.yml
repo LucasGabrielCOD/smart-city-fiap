@@ -29,7 +29,7 @@ jobs:
       uses: docker/build-push-action@v3
       with:
         push: true
-        tags: index.docker.io/${{ secrets.DOCKER_USERNAME }}/zephyryuusha/smart-city:${{ github.sha }}
+        tags: index.docker.io/${{ secrets.DOCKER_USERNAME }}/zephyryuusha/smart-city:latest
         file: ./Dockerfile
 
   deploy:
@@ -47,4 +47,4 @@ jobs:
         app-name: 'smart-city-production'
         slot-name: 'production'
         publish-profile: ${{ secrets.AzureAppService_PublishProfile_499957e636e642399622f3f226538d1c }}
-        images: 'index.docker.io/${{ secrets.DOCKER_USERNAME }}/zephyryuusha/smart-city:${{ github.sha }}'
+        images: 'index.docker.io/${{ secrets.DOCKER_USERNAME }}/zephyryuusha/smart-city:latest
