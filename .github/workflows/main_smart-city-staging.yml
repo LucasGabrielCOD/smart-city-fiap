@@ -6,7 +6,7 @@ name: Build and deploy JAR app to Azure Web App - smart-city-staging
 on:
   push:
     branches:
-      - teste2-final
+      - main
   workflow_dispatch:
 
 jobs:
