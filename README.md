@@ -109,6 +109,79 @@ Para obter a lista de todos os acidentes:
 ```bash
 curl http://localhost:8080/api/accidents 
 ```
+## Testes
+
+### Testes Automatizados
+
+Os testes automatizados são executados no workflow de staging para garantir a qualidade do código antes da implantação em produção.
+
+* **Tipos de testes:** Testes de endpoint utilizando JUnit e Mockito.
+* **Execução dos testes:** Os testes são executados automaticamente a cada push na branch `teste2-final`.
+* **Localização dos testes:** Os testes estão localizados na pasta `src/test/java`.
+* **Relatórios de teste:** Os relatórios de teste podem ser encontrados na aba "Actions" do repositório no GitHub, na execução do workflow "Build and deploy JAR app to Azure Web App - smart-city-staging".
+
+### Execução de Testes Localmente
+
+Para executar os testes localmente, você pode usar o Maven:
+
+1. **Navegue até o diretório raiz do projeto:**
+   ```bash
+   cd /caminho/para/o/seu/projeto/smart-city-fiap
+   ```
+2 **Execute o comando:**
+   ```bash
+    mnv test
+   ```
+### Descrição dos Testes
+
+**Testes do `AccidentControllerTest`:**
+
+*   **`testGetAllAccidents()`:**
+   *   Verifica se o endpoint `GET /api/accidents` retorna uma lista de todos os acidentes com sucesso.
+   *   Mocka o `AccidentService` para retornar uma lista de dois acidentes.
+   *   Verifica se o status code da resposta é 200 (OK).
+   *   Verifica se o corpo da resposta contém uma lista com dois acidentes.
+*   **`testCreateAccident()`:**
+   *   Verifica se o endpoint `POST /api/accidents` cria um novo acidente com sucesso.
+   *   Mocka o `AccidentService` para salvar o acidente.
+   *   Verifica se o status code da resposta é 200 (OK).
+   *   Verifica se o corpo da resposta contém o acidente criado, com a localização correta.
+*   **`testUpdateAccident()`:**
+   *   Verifica se o endpoint `PUT /api/accidents/{id}` atualiza um acidente existente com sucesso.
+   *   Mocka o `AccidentService` para atualizar o acidente.
+   *   Verifica se o status code da resposta é 200 (OK).
+   *   Verifica se o corpo da resposta contém o acidente atualizado, com a localização correta.
+*   **`testDeleteAccident()`:**
+   *   Verifica se o endpoint `DELETE /api/accidents/{id}` exclui um acidente com sucesso.
+   *   Mocka o `AccidentService` para excluir o acidente.
+   *   Verifica se o status code da resposta é 204 (No Content).
+
+**Testes do `AccidentServiceTest`:**
+
+*   **`testSaveEmergencyWithAccident()`:**
+   *   Verifica se o método `saveAccident` do `AccidentService` salva um acidente com uma emergência associada.
+   *   Mocka o `AccidentRepository` para simular o salvamento do acidente.
+   *   Verifica se o método `save` do `AccidentRepository` foi chamado uma vez.
+*   **`testSaveAccident()`:**
+   *   Verifica se o método `saveAccident` do `AccidentService` salva um acidente com sucesso.
+   *   Mocka o `AccidentRepository` para simular o salvamento do acidente.
+   *   Verifica se o acidente salvo tem a localização correta.
+   *   Verifica se o método `save` do `AccidentRepository` foi chamado uma vez.
+*   **`testUpdateAccident()`:**
+   *   Verifica se o método `updateAccident` do `AccidentService` atualiza um acidente com sucesso.
+   *   Mocka o `AccidentRepository` para simular a busca e o salvamento do acidente.
+   *   Verifica se o acidente atualizado tem a localização correta.
+   *   Verifica se o método `save` do `AccidentRepository` foi chamado uma vez.
+*   **`testDeleteAccident()`:**
+   *   Verifica se o método `deleteAccident` do `AccidentService` exclui um acidente com sucesso.
+   *   Mocka o `AccidentRepository` para simular a exclusão do acidente.
+   *   Verifica se o método `deleteById` do `AccidentRepository` foi chamado uma vez.
+
+**Observações:**
+
+*   Os testes utilizam o framework JUnit e a biblioteca Mockito para simular o comportamento dos componentes externos (como o `AccidentService` e o `AccidentRepository`).
+*   Os testes verificam se os métodos dos controllers e services retornam os valores esperados e se interagem corretamente com os repositórios.
+*   É importante ter uma boa cobertura de testes para garantir a qualidade do código e evitar bugs.
 
 
 
