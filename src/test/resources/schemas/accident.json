@@ -1,0 +1,31 @@
+{
+  "type": "array",
+  "items": {
+    "type": "object",
+    "properties": {
+      "id": {
+        "type": "integer",
+        "description": "ID do acidente"
+      },
+      "location": {
+        "type": "string",
+        "description": "Localização do acidente"
+      },
+      "timestamp": {
+        "type": "string",
+        "format": "date-time",
+        "description": "Data e hora do acidente"
+      },
+      "status": {
+        "type": "string",
+        "description": "Status do acidente (e.g., 'EM_ANDAMENTO', 'CONCLUÍDO')"
+      }
+    },
+    "required": [
+      "id",
+      "location",
+      "timestamp",
+      "status"
+    ]
+  }
+}

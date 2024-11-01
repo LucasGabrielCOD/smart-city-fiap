@@ -136,46 +136,58 @@ Para executar os testes localmente, você pode usar o Maven:
 
 **Testes do `AccidentControllerTest`:**
 
-*   **`testGetAllAccidents()`:**
-   *   Verifica se o endpoint `GET /api/accidents` retorna uma lista de todos os acidentes com sucesso.
-   *   Mocka o `AccidentService` para retornar uma lista de dois acidentes.
-   *   Verifica se o status code da resposta é 200 (OK).
-   *   Verifica se o corpo da resposta contém uma lista com dois acidentes.
-*   **`testCreateAccident()`:**
-   *   Verifica se o endpoint `POST /api/accidents` cria um novo acidente com sucesso.
-   *   Mocka o `AccidentService` para salvar o acidente.
-   *   Verifica se o status code da resposta é 200 (OK).
-   *   Verifica se o corpo da resposta contém o acidente criado, com a localização correta.
-*   **`testUpdateAccident()`:**
-   *   Verifica se o endpoint `PUT /api/accidents/{id}` atualiza um acidente existente com sucesso.
-   *   Mocka o `AccidentService` para atualizar o acidente.
-   *   Verifica se o status code da resposta é 200 (OK).
-   *   Verifica se o corpo da resposta contém o acidente atualizado, com a localização correta.
-*   **`testDeleteAccident()`:**
-   *   Verifica se o endpoint `DELETE /api/accidents/{id}` exclui um acidente com sucesso.
-   *   Mocka o `AccidentService` para excluir o acidente.
-   *   Verifica se o status code da resposta é 204 (No Content).
+**testGetAllAccidents():**
+* Verifica se o endpoint GET /api/accidents retorna uma lista de todos os acidentes com sucesso.
+* Mocka o AccidentService para retornar uma lista de dois acidentes.
+* Verifica se o status code da resposta é 200 (OK).
+* Verifica se o corpo da resposta contém uma lista com dois acidentes.
+
+**testCreateAccident():**
+* Verifica se o endpoint POST /api/accidents cria um novo acidente com sucesso.
+* Mocka o AccidentService para salvar o acidente.
+* Verifica se o status code da resposta é 201 (Created).
+* Verifica se o corpo da resposta contém o acidente criado, com a localização correta.
+
+**testUpdateAccident():**
+* Verifica se o endpoint PUT /api/accidents/{id} atualiza um acidente existente com sucesso.
+* Mocka o AccidentService para atualizar o acidente.
+* Verifica se o status code da resposta é 200 (OK).
+* Verifica se o corpo da resposta contém o acidente atualizado, com a localização correta.
+
+**testDeleteAccident():**
+* Verifica se o endpoint DELETE /api/accidents/{id} exclui um acidente com sucesso.
+* Mocka o AccidentService para excluir o acidente.
+* Verifica se o status code da resposta é 204 (No Content).
+
+**testGetAccidentById_NotFound():**
+* Verifica se o endpoint GET /api/accidents/{id} retorna um erro 404 (Not Found) quando o acidente não é encontrado.
+* Mocka o AccidentService para lançar uma ResponseStatusException com status 404.
+* Verifica se o status code da resposta é 404 (Not Found).
+
+**testUpdateAccident_BadRequest():**
+* Verifica se o endpoint PUT /api/accidents/{id} retorna um erro 400 (Bad Request) quando a requisição é inválida.
+* Envia uma requisição com corpo vazio.
+* Verifica se o status code da resposta é 400 (Bad Request).
+
 
 **Testes do `AccidentServiceTest`:**
 
-*   **`testSaveEmergencyWithAccident()`:**
-   *   Verifica se o método `saveAccident` do `AccidentService` salva um acidente com uma emergência associada.
-   *   Mocka o `AccidentRepository` para simular o salvamento do acidente.
-   *   Verifica se o método `save` do `AccidentRepository` foi chamado uma vez.
-*   **`testSaveAccident()`:**
-   *   Verifica se o método `saveAccident` do `AccidentService` salva um acidente com sucesso.
-   *   Mocka o `AccidentRepository` para simular o salvamento do acidente.
-   *   Verifica se o acidente salvo tem a localização correta.
-   *   Verifica se o método `save` do `AccidentRepository` foi chamado uma vez.
-*   **`testUpdateAccident()`:**
-   *   Verifica se o método `updateAccident` do `AccidentService` atualiza um acidente com sucesso.
-   *   Mocka o `AccidentRepository` para simular a busca e o salvamento do acidente.
-   *   Verifica se o acidente atualizado tem a localização correta.
-   *   Verifica se o método `save` do `AccidentRepository` foi chamado uma vez.
-*   **`testDeleteAccident()`:**
-   *   Verifica se o método `deleteAccident` do `AccidentService` exclui um acidente com sucesso.
-   *   Mocka o `AccidentRepository` para simular a exclusão do acidente.
-   *   Verifica se o método `deleteById` do `AccidentRepository` foi chamado uma vez.
+**testSaveAccident():**
+* Verifica se o método saveAccident do AccidentService salva um acidente com sucesso.
+* Mocka o AccidentRepository para simular o salvamento do acidente.
+* Valida o corpo da resposta com o schema JSON definido.
+* Verifica se o método save do AccidentRepository foi chamado uma vez.
+
+**testUpdateAccident():**
+* Verifica se o método updateAccident do AccidentService atualiza um acidente com sucesso.
+* Mocka o AccidentRepository para simular a busca e o salvamento do acidente.
+* Valida o corpo da resposta com o schema JSON definido.
+* Verifica se o método save do AccidentRepository foi chamado uma vez.
+
+**testDeleteAccident():**
+* Verifica se o método deleteAccident do AccidentService exclui um acidente com sucesso.
+* Mocka o AccidentRepository para simular a exclusão do acidente.
+* Verifica se o método deleteById do AccidentRepository foi chamado uma vez.
 
 **Observações:**
 

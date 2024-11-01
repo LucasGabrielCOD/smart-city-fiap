@@ -8,9 +8,11 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Arrays;
 import java.util.List;
@@ -59,7 +61,7 @@ public class AccidentControllerTest {
                         .with(httpBasic("user", "password"))
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(asJsonString(accident)))
-                .andExpect(status().isOk())
+                .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.location").value("Localização Teste"));
     }
 
@@ -86,6 +88,29 @@ public class AccidentControllerTest {
                         .with(httpBasic("user", "password"))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNoContent());
+    }
+
+    @Test
+    @WithMockUser
+    public void testGetAccidentById_NotFound() throws Exception {
+        when(accidentService.getAccidentById(any(Long.class)))
+                .thenThrow(new ResponseStatusException(HttpStatus.NOT_FOUND, "Acidente não encontrado"));
+
+        mockMvc.perform(get("/api/accidents/1")
+                        .with(httpBasic("user", "password"))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    @WithMockUser
+    public void testUpdateAccident_BadRequest() throws Exception {
+        // Simula um cenário onde a requisição é inválida (ex: dados faltando)
+        mockMvc.perform(put("/api/accidents/1")
+                        .with(httpBasic("user", "password"))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{}")) // Corpo da requisição vazio
+                .andExpect(status().isBadRequest()); // Espera-se que a validação falhe e retorne 400
     }
 
     public String asJsonString(final Object obj) {

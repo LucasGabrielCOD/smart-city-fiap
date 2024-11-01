@@ -1,0 +1,55 @@
+{
+  "type": "array",
+  "items": {
+    "type": "object",
+    "properties": {
+      "id": {
+        "type": "integer",
+        "description": "ID da emergência"
+      },
+      "accident": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "ID do acidente relacionado"
+          },
+          "location": {
+            "type": "string",
+            "description": "Localização do acidente relacionado"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Data e hora do acidente relacionado"
+          },
+          "status": {
+            "type": "string",
+            "description": "Status do acidente relacionado"
+          }
+        },
+        "required": [
+          "id",
+          "location",
+          "timestamp",
+          "status"
+        ]
+      },
+      "status": {
+        "type": "string",
+        "description": "Status da emergência (e.g., 'EM_ANDAMENTO', 'CONCLUÍDO')"
+      },
+      "timestamp": {
+        "type": "string",
+        "format": "date-time",
+        "description": "Data e hora da emergência"
+      }
+    },
+    "required": [
+      "id",
+      "accident",
+      "status",
+      "timestamp"
+    ]
+  }
+}
